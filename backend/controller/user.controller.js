@@ -32,12 +32,17 @@ export const loginUser = async(req,res,next)=>{
     const user = await User.findOne({email}).select('+password');
 
     if(!user){
-        res.status(401).json("Invalid email and password");
+        return res.status(401).json("Invalid email and password");
     }
     const isMatch = await user.comparePassword(password);
     if(!isMatch){
-        res.status(401).json("Invalid password");
+        return res.status(401).json("Invalid password");
     }
     const token = user.generateAuthToken();
+    res.cookie('token',token);
     res.status(200).json({token,user});
+}
+
+export const getUserProfile = async(req,res,next)=>{
+    res.status(200).json(req.user)
 }
