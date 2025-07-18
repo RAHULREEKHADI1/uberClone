@@ -54,7 +54,6 @@ Send a JSON object with the following structure:
         "lastName": "Doe"
       },
       "email": "john.doe@example.com"
-      // ...other user fields
     }
   }
   ```
@@ -70,7 +69,6 @@ Send a JSON object with the following structure:
         "param": "fieldName",
         "location": "body"
       }
-      // ...more errors
     ]
   }
   ```
