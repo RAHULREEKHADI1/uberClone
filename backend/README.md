@@ -73,6 +73,85 @@ Send a JSON object with the following structure:
   }
   ```
 
+
+---
+
+# /users/login Endpoint Documentation
+
+## Endpoint
+
+`POST /users/login`
+
+## Description
+Authenticates a user and returns a JWT token if credentials are valid.
+
+## Request Body
+Send a JSON object with the following structure:
+
+```
+{
+  "email": "string (valid email, required)",
+  "password": "string (min 6 chars, required)"
+}
+```
+
+### Example
+```
+{
+  "email": "john.doe@example.com",
+  "password": "securePassword123"
+}
+```
+
+## Validation
+- `email`: Required, must be a valid email
+- `password`: Required, minimum 6 characters
+
+## Responses
+
+### Success
+- **Status Code:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "token": "<JWT token>",
+    "user": {
+      "_id": "<user id>",
+      "fullName": {
+        "firstName": "John",
+        "lastName": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+  }
+  ```
+
+### Validation Error
+- **Status Code:** `401 Unauthorized`
+- **Body:**
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "fieldName",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+### Invalid Credentials
+- **Status Code:** `401 Unauthorized`
+- **Body:**
+  ```json
+  "Invalid email and password"
+  ```
+  or
+  ```json
+  "Invalid password"
+  ```
+
 ## Notes
-- Passwords are securely hashed before storage.
+- Passwords are never returned in the response.
 - The returned token can be used for authenticated requests.
