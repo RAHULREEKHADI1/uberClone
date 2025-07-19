@@ -152,6 +152,87 @@ Send a JSON object with the following structure:
   "Invalid password"
   ```
 
+
+---
+
+# /users/profile Endpoint Documentation
+
+## Endpoint
+
+`GET /users/profile`
+
+## Description
+Returns the authenticated user's profile information. Requires a valid JWT token in the request (cookie or Authorization header).
+
+## Request
+- No request body required.
+- Must include authentication (token in cookie or Authorization header).
+
+## Responses
+
+### Success
+- **Status Code:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "_id": "<user id>",
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "john.doe@example.com"
+    // ...other user fields
+  }
+  ```
+
+### Unauthorized
+- **Status Code:** `401 Unauthorized`
+- **Body:**
+  ```json
+  {
+    "error": "Authentication required"
+  }
+  ```
+
 ## Notes
-- Passwords are never returned in the response.
-- The returned token can be used for authenticated requests.
+- Requires authentication.
+- Password is never returned.
+
+---
+
+# /users/logout Endpoint Documentation
+
+## Endpoint
+
+`GET /users/logout`
+
+## Description
+Logs out the authenticated user by clearing the token cookie and blacklisting the token. Requires a valid JWT token in the request (cookie or Authorization header).
+
+## Request
+- No request body required.
+- Must include authentication (token in cookie or Authorization header).
+
+## Responses
+
+### Success
+- **Status Code:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "message": "User logged out"
+  }
+  ```
+
+### Unauthorized
+- **Status Code:** `401 Unauthorized`
+- **Body:**
+  ```json
+  {
+    "error": "Authentication required"
+  }
+  ```
+
+## Notes
+- Requires authentication.
+- Token is blacklisted and cannot be reused.
